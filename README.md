@@ -43,13 +43,13 @@ Aplicação para monitoramento de hortas/plantas com ESP32 com integração na n
 
 # Documentação
 Componentes:
-ESP32
-Sensor de Umidade e temperatura
-Sensor de umidade do solo
-Sensor de Luminosidade
-Mini Fan
-Mini Bomba de água 
-Servomotor para acionamento de cobertura
+- ESP32
+- Sensor de Umidade e temperatura
+- Sensor de umidade do solo
+- Sensor de Luminosidade
+- Mini Fan
+- Mini Bomba de água 
+- Motor para acionamento de cobertura
 
 <ol>
 <li><a href="Documentacao/01-Introducão.md"> Introdução</a></li>
