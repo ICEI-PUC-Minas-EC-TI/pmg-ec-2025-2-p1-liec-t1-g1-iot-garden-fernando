@@ -1,29 +1,25 @@
-# TÍTULO DO PROJETO
+# IOT ESP32 Garden
 
-`CAMPUS/UNIDADE`
+`Coração Eucarístico`
 
-`CURSO`
+`Engenharia da Computação`
 
-`SEMESTRE`
+`Oitavo`
 
-`DISCIPLINA`
+`Laboratório de Introdução de Engenharia da computação`
 
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
-* Nome completo do aluno 5
+* Fernando Vieira da Rocha Valentim
 
 ## Orientador
 
-* Nome completo do professor 1
+* Marta Dias Moreira Noronha 
 
 ## Resumo
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+Aplicação para monitoramento de hortas/plantas com ESP32 com integração na nuvem usando protocolo MQTT
 
 # Código (do arduino ou esp32)
 
