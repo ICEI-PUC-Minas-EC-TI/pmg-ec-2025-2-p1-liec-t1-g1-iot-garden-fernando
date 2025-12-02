@@ -5,6 +5,8 @@
 #include "modules/sensor_soil/sensor_soil.h"
 #include "modules/sensor_dht/sensor_dht.h"
 #include "modules/actuator/actuator.h"
+#include "modules/display/display.h"
+#include "modules/triggers/triggers.h"
 
 unsigned long lastCheckTime = 0;
 const unsigned long CHECK_INTERVAL = 2000;
@@ -13,6 +15,7 @@ void setup() {
   Serial.begin(115200);
   Serial.println("IoT Garden Starting...");
 
+  initDisplay();
   initActuators();
   initLightSensor();
   initSoilSensor();
@@ -76,7 +79,7 @@ void loop() {
       char tempStr[10];
       char humStr[10];
       dtostrf(dht.temperature, 4, 1, tempStr);
-      dtostrf(dht.humidity, 4, 1, humStr);
+      dtostrf(dht.humidity, 4, 1, humStr);  // DHT already returns raw % (0-100)
       publishMQTT(TOPIC_PUBLISH_TEMPERATURE, tempStr);
       publishMQTT(TOPIC_PUBLISH_HUMIDITY, humStr);
     }
@@ -87,29 +90,28 @@ void loop() {
 
     if (soil.valid) {
       char soilStr[10];
-      itoa(soil.percent, soilStr, 10);
+      itoa(soil.raw, soilStr, 10);  // Send raw ADC value
       publishMQTT(TOPIC_PUBLISH_SOIL, soilStr);
     }
 
-    // Sensor triggers (only if valid readings)
-    if (light.valid) {
-      if (light.night) {
-        requestActuator(ACTUATOR_LIGHT, true, SOURCE_TRIGGER);
-      } else {
-        requestActuator(ACTUATOR_LIGHT, false, SOURCE_TRIGGER);
-      }
-    }
+    // Update OLED display
+    DisplayData displayData;
+    displayData.temperature = dht.temperature;
+    displayData.humidity = dht.humidity;
+    displayData.light = !light.night;
+    displayData.soil = soil.raw;
+    displayData.tempValid = dht.valid;
+    displayData.humValid = dht.valid;
+    displayData.lightValid = light.valid;
+    displayData.soilValid = soil.valid;
+    displayData.activeActuator = getActiveActuator();
+    updateDisplay(displayData);
 
-    if (soil.valid && soil.percent < 30) {
-      requestActuator(ACTUATOR_SPRINKLER, true, SOURCE_TRIGGER);
-    } else if (soil.valid) {
-      requestActuator(ACTUATOR_SPRINKLER, false, SOURCE_TRIGGER);
-    }
-
-    if (dht.valid && dht.temperature > 30) {
-      requestActuator(ACTUATOR_FAN, true, SOURCE_TRIGGER);
-    } else if (dht.valid) {
-      requestActuator(ACTUATOR_FAN, false, SOURCE_TRIGGER);
-    }
+    // Process automatic triggers
+    SensorData sensors;
+    sensors.dht = dht;
+    sensors.light = light;
+    sensors.soil = soil;
+    processTriggers(sensors);
   }
 }

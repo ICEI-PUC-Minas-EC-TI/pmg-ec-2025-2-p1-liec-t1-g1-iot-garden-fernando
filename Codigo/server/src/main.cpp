@@ -3,6 +3,7 @@
 #include <atomic>
 #include <mutex>
 #include <cstring>
+#include <chrono>
 
 #include "mqtt_client.h"
 #include "database.h"
@@ -17,6 +18,10 @@ constexpr const char* DB_PATH = "garden.db";
 constexpr const char* TOPIC_TEMPERATURE = "vltim43/sensor/temperature";
 constexpr const char* TOPIC_HUMIDITY = "vltim43/sensor/humidity";
 constexpr const char* TOPIC_LIGHT = "vltim43/sensor/light";
+constexpr const char* TOPIC_SOIL = "vltim43/sensor/soil";
+
+// Timeout: insert partial data if not all sensors respond within this time
+constexpr int BUFFER_TIMEOUT_MS = 10000;  // 10 seconds
 
 std::atomic<bool> running(true);
 
@@ -48,12 +53,36 @@ int main() {
     float temperature = 0;
     float humidity = 0;
     bool light = false;
-    bool hasTemp = false, hasHum = false, hasLight = false;
+    int soil = 0;
+    bool hasTemp = false, hasHum = false, hasLight = false, hasSoil = false;
     std::mutex bufferMutex;
+    auto lastReceiveTime = std::chrono::steady_clock::now();
+
+    // Helper to flush buffer and insert reading
+    auto flushBuffer = [&](bool partial = false) {
+        if (partial) {
+            std::cout << "[PARTIAL] ";
+        }
+        std::cout << "Temp: " << (hasTemp ? std::to_string(temperature) + "C" : "--") << " | "
+                  << "Humidity: " << (hasHum ? std::to_string((int)humidity) + "%" : "--") << " | "
+                  << "Light: " << (hasLight ? (light ? "DAY" : "NIGHT") : "--") << " | "
+                  << "Soil: " << (hasSoil ? std::to_string(soil) : "--") << std::endl;
+
+        if (!db.insertReading(temperature, humidity, light, soil)) {
+            std::cerr << "Failed to store reading" << std::endl;
+        }
+
+        hasTemp = hasHum = hasLight = hasSoil = false;
+        temperature = 0; humidity = 0; light = false; soil = 0;
+        lastReceiveTime = std::chrono::steady_clock::now();
+    };
 
     // Set up message handler
     mqtt.setMessageCallback([&](const std::string& topic, const std::string& payload) {
         std::lock_guard<std::mutex> lock(bufferMutex);
+
+        // Update timestamp on any message
+        lastReceiveTime = std::chrono::steady_clock::now();
 
         if (topic == TOPIC_TEMPERATURE) {
             temperature = std::stof(payload);
@@ -62,21 +91,16 @@ int main() {
             humidity = std::stof(payload);
             hasHum = true;
         } else if (topic == TOPIC_LIGHT) {
-            light = (payload == "true" || payload == "1");
+            light = (payload == "day");
             hasLight = true;
+        } else if (topic == TOPIC_SOIL) {
+            soil = std::stoi(payload);
+            hasSoil = true;
         }
 
-        // Once we have all 3 values, insert and reset
-        if (hasTemp && hasHum && hasLight) {
-            std::cout << "Temp: " << temperature << " °C | "
-                      << "Humidity: " << humidity << " % | "
-                      << "Light: " << (light ? "Day" : "Night") << std::endl;
-
-            if (!db.insertReading(temperature, humidity, light)) {
-                std::cerr << "Failed to store reading" << std::endl;
-            }
-
-            hasTemp = hasHum = hasLight = false;
+        // Once we have all 4 values, insert and reset
+        if (hasTemp && hasHum && hasLight && hasSoil) {
+            flushBuffer(false);
         }
     });
 
@@ -84,6 +108,7 @@ int main() {
     mqtt.subscribe(TOPIC_TEMPERATURE);
     mqtt.subscribe(TOPIC_HUMIDITY);
     mqtt.subscribe(TOPIC_LIGHT);
+    mqtt.subscribe(TOPIC_SOIL);
 
     // Connect to broker
     if (!mqtt.connect()) {
@@ -98,6 +123,19 @@ int main() {
     // Main loop
     while (running) {
         mqtt.loop();
+
+        // Check for timeout - flush partial data if waiting too long
+        {
+            std::lock_guard<std::mutex> lock(bufferMutex);
+            bool hasAny = hasTemp || hasHum || hasLight || hasSoil;
+            if (hasAny) {
+                auto now = std::chrono::steady_clock::now();
+                auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastReceiveTime).count();
+                if (elapsed >= BUFFER_TIMEOUT_MS) {
+                    flushBuffer(true);
+                }
+            }
+        }
     }
 
     std::cout << "Server stopped." << std::endl;

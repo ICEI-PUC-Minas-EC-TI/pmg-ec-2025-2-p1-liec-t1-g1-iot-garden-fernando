@@ -16,6 +16,7 @@ constexpr const char* CLIENT_ID = "esp32_simulator";
 constexpr const char* TOPIC_TEMPERATURE = "vltim43/sensor/temperature";
 constexpr const char* TOPIC_HUMIDITY = "vltim43/sensor/humidity";
 constexpr const char* TOPIC_LIGHT = "vltim43/sensor/light";
+constexpr const char* TOPIC_SOIL = "vltim43/sensor/soil";
 
 std::atomic<bool> running(true);
 
@@ -50,6 +51,7 @@ int main() {
     // Simulate realistic sensor values
     float baseTemp = 22.0f;
     float baseHumidity = 55.0f;
+    int baseSoil = 2000;  // Raw ADC value (0-4095, higher = drier)
     bool isDay = true;
     int cycleCount = 0;
 
@@ -73,21 +75,30 @@ int main() {
             isDay = !isDay;
         }
 
+        // Soil moisture variation (slowly drifts, occasional "watering")
+        std::uniform_int_distribution<int> soilDist(-50, 50);
+        int soil = baseSoil + soilDist(gen) + static_cast<int>(std::sin(cycleCount * 0.05f) * 300);
+        soil = std::clamp(soil, 500, 3500);
+
         // Format values like ESP32 does
         char tempStr[10];
         char humStr[10];
+        char soilStr[10];
         snprintf(tempStr, sizeof(tempStr), "%.1f", temp);
         snprintf(humStr, sizeof(humStr), "%.1f", humidity);
-        const char* lightStr = isDay ? "true" : "false";
+        snprintf(soilStr, sizeof(soilStr), "%d", soil);
+        const char* lightStr = isDay ? "day" : "night";  // Match ESP32 format
 
         // Publish
         mqtt.publish(TOPIC_TEMPERATURE, tempStr);
         mqtt.publish(TOPIC_HUMIDITY, humStr);
         mqtt.publish(TOPIC_LIGHT, lightStr);
+        mqtt.publish(TOPIC_SOIL, soilStr);
 
-        std::cout << "Temperature: " << tempStr << " °C  |  "
-                  << "Humidity: " << humStr << " %  |  "
-                  << "Light: " << (isDay ? "Day" : "Night") << std::endl;
+        std::cout << "Temp: " << tempStr << "C | "
+                  << "Humidity: " << humStr << "% | "
+                  << "Light: " << (isDay ? "DAY" : "NIGHT") << " | "
+                  << "Soil: " << soilStr << std::endl;
 
         cycleCount++;
 

@@ -11,6 +11,7 @@ struct SensorReading {
     float temperature;
     float humidity;
     bool light;
+    int soil;
     std::string timestamp;
 };
 
@@ -23,7 +24,7 @@ public:
     void close();
     bool isOpen() const;
 
-    bool insertReading(float temperature, float humidity, bool light);
+    bool insertReading(float temperature, float humidity, bool light, int soil);
     std::vector<SensorReading> getReadings(int limit = 100);
     std::optional<SensorReading> getLatestReading();
 

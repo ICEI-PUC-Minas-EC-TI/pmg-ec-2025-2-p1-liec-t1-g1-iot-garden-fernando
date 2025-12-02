@@ -1,7 +1,10 @@
 #include "actuator.h"
 #include "../log/log.h"
 
-#define ACTUATOR_TIMEOUT_MS 5000  // 5 seconds max
+// Timeout for each actuator (0 = no timeout / indefinite)
+#define TIMEOUT_SPRINKLER_MS  5000  // 5 seconds
+#define TIMEOUT_FAN_MS        3000  // 3 seconds
+#define TIMEOUT_LIGHT_MS      5000  // 5 seconds
 
 static ActuatorType activeActuator = ACTUATOR_NONE;
 static ActuatorSource activeSource = SOURCE_NONE;
@@ -105,9 +108,19 @@ void releaseActuator() {
   logInfo(LOG_MQTT, "All actuators released");
 }
 
+static unsigned long getActuatorTimeout(ActuatorType type) {
+  switch (type) {
+    case ACTUATOR_SPRINKLER: return TIMEOUT_SPRINKLER_MS;
+    case ACTUATOR_FAN: return TIMEOUT_FAN_MS;
+    case ACTUATOR_LIGHT: return TIMEOUT_LIGHT_MS;
+    default: return 0;
+  }
+}
+
 void checkActuatorTimeout() {
   if (activeActuator != ACTUATOR_NONE && activationTime > 0) {
-    if (millis() - activationTime >= ACTUATOR_TIMEOUT_MS) {
+    unsigned long timeout = getActuatorTimeout(activeActuator);
+    if (timeout > 0 && millis() - activationTime >= timeout) {
       logKeyValue(LOG_MQTT, getActuatorName(activeActuator), "TIMEOUT");
       turnOffAll();
       activeActuator = ACTUATOR_NONE;

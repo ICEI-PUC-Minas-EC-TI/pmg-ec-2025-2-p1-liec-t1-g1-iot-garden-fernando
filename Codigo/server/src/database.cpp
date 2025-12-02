@@ -40,6 +40,7 @@ bool Database::createTables() {
             temperature REAL NOT NULL,
             humidity REAL NOT NULL,
             light INTEGER NOT NULL,
+            soil INTEGER NOT NULL DEFAULT 0,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         );
         CREATE INDEX IF NOT EXISTS idx_timestamp ON sensor_readings(timestamp);
@@ -60,10 +61,10 @@ bool Database::execute(const std::string& sql) {
     return true;
 }
 
-bool Database::insertReading(float temperature, float humidity, bool light) {
+bool Database::insertReading(float temperature, float humidity, bool light, int soil) {
     if (!m_db) return false;
 
-    const char* sql = "INSERT INTO sensor_readings (temperature, humidity, light) VALUES (?, ?, ?)";
+    const char* sql = "INSERT INTO sensor_readings (temperature, humidity, light, soil) VALUES (?, ?, ?, ?)";
     sqlite3_stmt* stmt;
 
     int rc = sqlite3_prepare_v2(m_db, sql, -1, &stmt, nullptr);
@@ -75,6 +76,7 @@ bool Database::insertReading(float temperature, float humidity, bool light) {
     sqlite3_bind_double(stmt, 1, temperature);
     sqlite3_bind_double(stmt, 2, humidity);
     sqlite3_bind_int(stmt, 3, light ? 1 : 0);
+    sqlite3_bind_int(stmt, 4, soil);
 
     rc = sqlite3_step(stmt);
     sqlite3_finalize(stmt);
@@ -91,7 +93,7 @@ std::vector<SensorReading> Database::getReadings(int limit) {
     std::vector<SensorReading> readings;
     if (!m_db) return readings;
 
-    const char* sql = "SELECT id, temperature, humidity, light, timestamp FROM sensor_readings "
+    const char* sql = "SELECT id, temperature, humidity, light, soil, timestamp FROM sensor_readings "
                       "ORDER BY timestamp DESC LIMIT ?";
     sqlite3_stmt* stmt;
 
@@ -107,7 +109,8 @@ std::vector<SensorReading> Database::getReadings(int limit) {
         reading.temperature = static_cast<float>(sqlite3_column_double(stmt, 1));
         reading.humidity = static_cast<float>(sqlite3_column_double(stmt, 2));
         reading.light = sqlite3_column_int(stmt, 3) != 0;
-        reading.timestamp = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+        reading.soil = sqlite3_column_int(stmt, 4);
+        reading.timestamp = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
         readings.push_back(reading);
     }
 
@@ -118,7 +121,7 @@ std::vector<SensorReading> Database::getReadings(int limit) {
 std::optional<SensorReading> Database::getLatestReading() {
     if (!m_db) return std::nullopt;
 
-    const char* sql = "SELECT id, temperature, humidity, light, timestamp FROM sensor_readings "
+    const char* sql = "SELECT id, temperature, humidity, light, soil, timestamp FROM sensor_readings "
                       "ORDER BY timestamp DESC LIMIT 1";
     sqlite3_stmt* stmt;
 
@@ -133,7 +136,8 @@ std::optional<SensorReading> Database::getLatestReading() {
         reading.temperature = static_cast<float>(sqlite3_column_double(stmt, 1));
         reading.humidity = static_cast<float>(sqlite3_column_double(stmt, 2));
         reading.light = sqlite3_column_int(stmt, 3) != 0;
-        reading.timestamp = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4));
+        reading.soil = sqlite3_column_int(stmt, 4);
+        reading.timestamp = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
         result = reading;
     }
 
