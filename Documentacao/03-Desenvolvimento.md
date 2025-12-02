@@ -1,33 +1,41 @@
-
 # Materiais
 
 Os materiais utilizados no projeto foram:
-- Liste os materiais usados no projeto, como Arduino/ESP, sensores, atuadores e outros.
+
+- ESP32
+- Sensor de Umidade e temperatura DHT11
+- Sensor de Umidade do solo capacitivo
+- Sensor de Luminosidade (photoresistor)
+- Mini Ventoinha
+- Mini Bomba de água
+- Mini tela OLED
+- Fonte Ajustável Para Protoboard
+- Resistores, Diodos, Leds
 
 # Desenvolvimento
 
-Descreva aqui como foi o desenvolvimento do trabalho, destacando cada uma das etapas necessárias para chegar até a solução final.
+O desenvolvimento do projeto foi realizado de forma incremental, testando cada componente isoladamente antes de integrar ao sistema final.
 
-## Desenvolvimento do Aplicativo
+## Etapa 1: Simulação no Wokwi
 
-### Interface
+Inicialmente, utilizamos o simulador Wokwi para entender o funcionamento dos sensores e do ESP32. Isso permitiu testar a lógica do código sem a necessidade do hardware físico, acelerando o aprendizado sobre cada componente.
 
-Descreva o desenvolvimento das telas do aplicativo.
+## Etapa 2: Testes Isolados dos Sensores
 
-### Código
+Após a simulação, partimos para testes com o hardware real. Cada sensor foi testado individualmente em pequenos projetos separados:
 
-Descreva o desenvolvimento do código do aplicativo.
+- Teste do DHT11 (temperatura e umidade)
+- Teste do sensor de umidade do solo
+- Teste do photoresistor (luminosidade)
 
-## Desenvolvimento do Hardware
+## Etapa 3: Teste do Servidor MQTT
 
-### Montagem
+Com os sensores funcionando, desenvolvemos e testamos o servidor C++ que recebe os dados via MQTT. Validamos a conexão com o broker e o armazenamento no banco SQLite.
 
-Descreva como foi o processo da montagem do projeto.
+## Etapa 4: Teste dos Atuadores com LEDs
 
-### Desenvolvimento do Código
+Antes de conectar os atuadores reais (ventoinha, bomba, luz), substituímos cada um por LEDs para testar a lógica de acionamento de forma segura.
 
-Descreva como foi o desenvolvimento do código do arduino/ESP.
+## Etapa 5: Integração Final
 
-## Comunicação entre App e Hardware
-
-Descreva como foi o processo de comunicação entre App e arduino/ESP.
+Por fim, integramos todos os componentes: sensores, atuadores reais, comunicação MQTT e servidor. Cada parte já havia sido validada isoladamente, facilitando a identificação de problemas na integração.
