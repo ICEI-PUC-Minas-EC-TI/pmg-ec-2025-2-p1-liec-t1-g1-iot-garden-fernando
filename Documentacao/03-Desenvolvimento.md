@@ -39,3 +39,21 @@ O código do ESP32 foi desenvolvido em C++ utilizando PlatformIO. O desenvolvime
 ## Comunicação entre App e Hardware
 
 A comunicação é feita via protocolo MQTT. O ESP32 publica os dados dos sensores em tópicos específicos (temperatura, umidade, luminosidade, umidade do solo). Um servidor em C++ se conecta ao broker MQTT, recebe esses dados e armazena em banco de dados SQLite. O servidor também pode enviar comandos para acionar os atuadores (ventoinha, bomba, luz) através de tópicos MQTT que o ESP32 escuta.
+
+```
+                                  ┌─────────────┐
+                                  │     App     │
+                                  └──────┬──────┘
+                                         │ commands
+                                         ▼
+┌─────────────┐       MQTT        ┌─────────────┐
+│   ESP32     │ ◄───────────────► │  Mosquitto  │
+│  (sensors)  │   sensor/*        │   Broker    │
+└─────────────┘                   └──────┬──────┘
+                                         │
+                                         ▼
+                                  ┌─────────────┐      ┌─────────────┐
+                                  │   Server    │ ───► │   SQLite    │
+                                  └─────────────┘      │  garden.db  │
+                                                       └─────────────┘
+```
