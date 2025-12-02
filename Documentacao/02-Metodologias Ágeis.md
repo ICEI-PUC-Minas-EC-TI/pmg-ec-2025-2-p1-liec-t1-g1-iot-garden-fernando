@@ -12,6 +12,34 @@ Por se tratar de um projeto individual, todas as funções foram desempenhadas p
 - **Desenvolvedor:** Fernando Vieira da Rocha Valentim
 - **Tester:** Fernando Vieira da Rocha Valentim
 
+### Processo
+
+O projeto foi dividido em 4 sprints:
+
+#### Sprint 1 - Esboço do Projeto + Lista de Componentes
+- **Responsável:** Fernando Vieira da Rocha Valentim
+- **Entrega:** Definição do escopo do projeto e levantamento dos componentes necessários
+
+<!-- TODO: Adicionar imagem do quadro Kanban -->
+
+#### Sprint 2 - Aplicativo Pronto
+- **Responsável:** Fernando Vieira da Rocha Valentim
+- **Entrega:** Desenvolvimento do aplicativo mobile com App Inventor
+
+<!-- TODO: Adicionar imagem do quadro Kanban -->
+
+#### Sprint 3 - Projeto de Hardware
+- **Responsável:** Fernando Vieira da Rocha Valentim
+- **Entrega:** Montagem e testes dos sensores e atuadores com ESP32
+
+<!-- TODO: Adicionar imagem do quadro Kanban -->
+
+#### Sprint 4 - Projeto Pronto
+- **Responsável:** Fernando Vieira da Rocha Valentim
+- **Entrega:** Integração final de todos os componentes e testes completos
+
+<!-- TODO: Adicionar imagem do quadro Kanban -->
+
 ### Ferramentas
 
 As ferramentas utilizadas no projeto foram:

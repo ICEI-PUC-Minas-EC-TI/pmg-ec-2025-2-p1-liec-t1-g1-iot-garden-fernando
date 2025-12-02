@@ -164,3 +164,27 @@ O servidor irá:
 Para parar o servidor, pressione `Ctrl+C`.
 
 ---
+
+## Tópicos MQTT
+
+O sistema utiliza os seguintes tópicos MQTT para comunicação:
+
+### Sensores (ESP32 publica, App/Servidor subscrevem)
+
+| Tópico | Descrição | Valores |
+|--------|-----------|---------|
+| `vltim43/sensor/temperature` | Temperatura | °C (ex: "25.5") |
+| `vltim43/sensor/humidity` | Umidade do ar | % (ex: "60.0") |
+| `vltim43/sensor/light` | Luminosidade | "day" ou "night" |
+| `vltim43/sensor/soil` | Umidade do solo | % (ex: "45") |
+
+### Atuadores (App publica, ESP32 subscribe)
+
+| Tópico | Descrição | Valores |
+|--------|-----------|---------|
+| `vltim43/actuator/fan` | Ventoinha | "on" / "off" |
+| `vltim43/actuator/sprinkler` | Bomba d'água | "on" / "off" |
+| `vltim43/actuator/light` | Luz | "on" / "off" |
+| `vltim43/led/control` | LED de controle | "on" / "off" |
+
+---
