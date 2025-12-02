@@ -10,6 +10,7 @@ Os materiais utilizados no projeto foram:
 - Mini Bomba de água
 - Mini tela OLED
 - Fonte Ajustável Para Protoboard
+- Transistores BC337
 - Resistores, Diodos, Leds
 
 # Desenvolvimento

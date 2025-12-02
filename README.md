@@ -53,6 +53,7 @@ Componentes:
 - Mini Bomba de água
 - Mini tela OLED
 - Fonte Ajustável Para Protoboard
+- Transistores BC337
 - Resistores, Diodos, Leds
 
 <ol>
