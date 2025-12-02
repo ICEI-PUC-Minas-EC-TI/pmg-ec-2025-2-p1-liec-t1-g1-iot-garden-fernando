@@ -24,7 +24,7 @@ Foi desenvolvido um aplicativo mobile utilizando o MIT App Inventor. O aplicativ
 
 ### Código
 
-O App Inventor não utiliza código tradicional. A lógica é construída através de blocos visuais que são arrastados e conectados, similar a um quebra-cabeça. Isso facilita o desenvolvimento sem necessidade de conhecimento em programação.
+O App Inventor não utiliza código tradicional. A lógica é construída através de blocos visuais que são arrastados e conectados
 
 ## Desenvolvimento do Hardware
 
