@@ -2,7 +2,7 @@
 
 ## Aviso Importante
 
-**Sistema Operacional:** Todo o desenvolvimento deste projeto foi + realizado no **Linux**. Não testamos nem oferecemos suporte para o + desenvolvimento em outros sistemas operacionais (Windows, macOS, + etc.). Caso você utilize outro SO, poderá encontrar diferenças ou + problemas não documentados na hora de buildar o projeto e fazer upload para o ESP32
+**Sistema Operacional:** Todo o desenvolvimento deste projeto foi realizado no **Linux**. Não testamos nem oferecemos suporte para o desenvolvimento em outros sistemas operacionais (Windows, macOS, etc.). Caso você utilize outro SO, poderá encontrar diferenças ou problemas não documentados na hora de buildar o projeto e fazer upload para o ESP32
 
 Este projeto foi desenvolvido utilizando o **PlatformIO** integrado ao **Visual Studio Code (VS Code)**. O PlatformIO oferece diversas vantagens em relação à IDE tradicional do Arduino, incluindo gerenciamento automático de bibliotecas, suporte a múltiplas placas e um ambiente de desenvolvimento mais robusto.
 
@@ -20,7 +20,7 @@ Este projeto foi desenvolvido utilizando o **PlatformIO** integrado ao **Visual 
 ### Instalação do PlatformIO
 
 1. Abra o Visual Studio Code
-2. Vá em **Extensions** (Ctrl+Shift+X)
+2. Vá em **Extensions** (Ctrlhift)
 3. Pesquise por "PlatformIO IDE"
 4. Clique em **Install**
 5. Aguarde a instalação completa e reinicie o VS Code se necessário
@@ -58,13 +58,13 @@ O PlatformIO normalmente baixa as bibliotecas automaticamente ao abrir o projeto
 
 **Bibliotecas utilizadas neste projeto:**
 
-| Biblioteca | Descrição |
-|------------|-----------|
-| **PubSubClient** | Cliente MQTT para comunicação com o broker |
-| **DHT sensor library for ESPx** | Leitura do sensor de temperatura e umidade DHT11 |
-| **Adafruit SSD1306** | Controle da tela OLED |
-| **Adafruit GFX Library** | Biblioteca gráfica para displays (dependência do SSD1306) |
-| **Adafruit BusIO** | Comunicação I2C/SPI (dependência do SSD1306) |
+| Biblioteca                      | Descrição                                                 |
+| ------------------------------- | --------------------------------------------------------- |
+| **PubSubClient**                | Cliente MQTT para comunicação com o broker                |
+| **DHT sensor library for ESPx** | Leitura do sensor de temperatura e umidade DHT11          |
+| **Adafruit SSD1306**            | Controle da tela OLED                                     |
+| **Adafruit GFX Library**        | Biblioteca gráfica para displays (dependência do SSD1306) |
+| **Adafruit BusIO**              | Comunicação I2C/SPI (dependência do SSD1306)              |
 
 **Como instalar bibliotecas manualmente:**
 
@@ -75,6 +75,7 @@ O PlatformIO normalmente baixa as bibliotecas automaticamente ao abrir o projeto
 5. Selecione o projeto `Codigo/iot` e confirme
 
 Para mais detalhes sobre gerenciamento de bibliotecas no PlatformIO:
+
 - [Documentação Oficial - Library Manager](https://docs.platformio.org/en/latest/librarymanager/index.html)
 
 ### Passo 4: Aguardar Inicialização do PlatformIO
