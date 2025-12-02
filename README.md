@@ -8,14 +8,13 @@
 
 `Laboratório de Introdução de Engenharia da computação`
 
-
 ## Integrantes
 
-* Fernando Vieira da Rocha Valentim
+- Fernando Vieira da Rocha Valentim
 
 ## Orientador
 
-* Marta Dias Moreira Noronha 
+- Marta Dias Moreira Noronha
 
 ## Resumo
 
@@ -23,7 +22,7 @@ Aplicação para monitoramento de hortas/plantas com ESP32 com integração na n
 
 # Código (do arduino ou esp32)
 
-<li><a href="Codigo/README.md"> Código Fonte (.ino)</a></li>
+<li><a href="Codigo/iot/src/main.cpp"> Código Fonte (.ino)</a></li>
 
 # Aplicativo para Smartphone
 
@@ -40,16 +39,19 @@ Aplicação para monitoramento de hortas/plantas com ESP32 com integração na n
 
 <li><a href="Manual/manual de utilização.md"> Manual de Utilização</a></li>
 
-
 # Documentação
+
 Componentes:
+
 - ESP32
-- Sensor de Umidade e temperatura
-- Sensor de umidade do solo
-- Sensor de Luminosidade
-- Mini Fan
-- Mini Bomba de água 
-- Motor para acionamento de cobertura
+- Sensor de Umidade e temperatura DHT11
+- Sensor de Umidade do solo capacitivo
+- Sensor de Luminosidade (photoresistor)
+- Mini Ventoinha
+- Mini Bomba de água
+- Mini tela OLED
+- Fonte Ajustável Para Protoboard
+- Resistores, Diodos, Leds
 
 <ol>
 <li><a href="Documentacao/01-Introducão.md"> Introdução</a></li>
@@ -59,4 +61,3 @@ Componentes:
 <li><a href="Documentacao/05-Conclusão.md"> Conclusão </a></li>
 <li><a href="Documentacao/06-Referências.md"> Referências </a></li>
 </ol>
-
