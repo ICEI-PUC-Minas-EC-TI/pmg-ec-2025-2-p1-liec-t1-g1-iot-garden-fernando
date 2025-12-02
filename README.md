@@ -18,7 +18,9 @@
 
 ## Resumo
 
-Aplicação para monitoramento de hortas/plantas com ESP32 com integração na nuvem usando protocolo MQTT
+Aplicação para monitoramento de hortas/plantas com ESP32 com integração na nuvem usando protocolo MQTT.
+
+O ESP32 coleta dados dos sensores (temperatura, umidade do ar, umidade do solo e luminosidade) e publica via MQTT. Um servidor em C++ recebe esses dados e armazena em banco SQLite. O sistema também aciona atuadores automaticamente (ventoinha, bomba d'água, luz) com base nas leituras dos sensores.
 
 # Código (do arduino ou esp32)
 
