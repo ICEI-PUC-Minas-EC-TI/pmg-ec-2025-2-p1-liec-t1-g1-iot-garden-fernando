@@ -26,10 +26,13 @@ Codigo/
 │       │   └── pins.h          ← Definição dos pinos GPIO
 │       └── modules/
 │           ├── actuator/       ← Controle dos atuadores (fan, bomba, luz)
+│           ├── display/        ← Exibição de dados no display OLED
+│           ├── log/            ← Sistema de logging
 │           ├── mqtt/           ← Conexão WiFi e comunicação MQTT
 │           ├── sensor_dht/     ← Leitura do sensor DHT11
 │           ├── sensor_light/   ← Leitura do photoresistor
-│           └── sensor_soil/    ← Leitura do sensor de umidade do solo
+│           ├── sensor_soil/    ← Leitura do sensor de umidade do solo
+│           └── triggers/       ← Acionamento automático dos atuadores
 │
 └── server/                     ← Servidor C++ (CMake)
     ├── include/
@@ -64,11 +67,31 @@ A montagem foi feita de forma gradual. Inicialmente, utilizamos o simulador Wokw
 
 O código do ESP32 foi desenvolvido em C++ utilizando PlatformIO. O desenvolvimento seguiu a mesma abordagem incremental: primeiro código para cada sensor isolado, depois integração com MQTT, depois lógica de acionamento dos atuadores, e por fim integração de tudo no código principal.
 
+## Sistema de Triggers (Acionamento Automático)
+
+O sistema possui um módulo de triggers que aciona os atuadores automaticamente baseado nas leituras dos sensores. Cada trigger pode ser habilitado ou desabilitado individualmente:
+
+| Trigger | Condição de Acionamento | Condição de Desligamento |
+|---------|------------------------|--------------------------|
+| Ventoinha | Temperatura > 30°C | Temperatura < 28°C |
+| Irrigação | Solo muito seco (ADC > 3000) | Solo úmido (ADC < 2500) |
+| Iluminação | Noite detectada | Dia detectado |
+
+O sistema utiliza histerese para evitar acionamentos rápidos e repetidos. Comandos manuais via MQTT têm prioridade sobre os triggers automáticos.
+
+## Display OLED
+
+O sistema exibe em tempo real no display OLED:
+- Temperatura e umidade do ar
+- Condição de luminosidade (dia/noite)
+- Umidade do solo
+- Atuador ativo no momento
+
 ## Comunicação entre App e Hardware
 
 A comunicação é feita via protocolo MQTT. O ESP32 publica os dados dos sensores em tópicos específicos (temperatura, umidade, luminosidade, umidade do solo). Um servidor em C++ se conecta ao broker MQTT, recebe esses dados e armazena em banco de dados SQLite. O servidor também pode enviar comandos para acionar os atuadores (ventoinha, bomba, luz) através de tópicos MQTT que o ESP32 escuta.
 
-```
+```text
                                   ┌─────────────┐
                                   │     App     │
                                   └──────┬──────┘
