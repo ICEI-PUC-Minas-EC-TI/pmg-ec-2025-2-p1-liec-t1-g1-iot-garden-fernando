@@ -20,10 +20,9 @@ Este projeto foi desenvolvido utilizando o **PlatformIO** integrado ao **Visual 
 ### Instalação do PlatformIO
 
 1. Abra o Visual Studio Code
-2. Vá em **Extensions** (Ctrlhift)
-3. Pesquise por "PlatformIO IDE"
-4. Clique em **Install**
-5. Aguarde a instalação completa e reinicie o VS Code se necessário
+2. Vá em **Extensions**
+3. Pesquise por "PlatformIO IDE" e Clique em **Install**
+4. Aguarde a instalação completa e reinicie o VS Code se necessário
 
 ---
 
@@ -74,10 +73,6 @@ O PlatformIO normalmente baixa as bibliotecas automaticamente ao abrir o projeto
 4. Clique na biblioteca desejada e depois em **"Add to Project"**
 5. Selecione o projeto `Codigo/iot` e confirme
 
-Para mais detalhes sobre gerenciamento de bibliotecas no PlatformIO:
-
-- [Documentação Oficial - Library Manager](https://docs.platformio.org/en/latest/librarymanager/index.html)
-
 ### Passo 4: Aguardar Inicialização do PlatformIO
 
 - O PlatformIO irá detectar automaticamente o arquivo `platformio.ini`
@@ -109,7 +104,7 @@ Para visualizar as mensagens do ESP32:
 
 ### Passo 9: Funcionando
 
-1. Se tudo deu certo o ESP32 vai tentar conectar no WIFI e depois no broker mqtt configurado. Caso sucesso, imediatamente vai começar a emitir os dados dos sensores
+1. Se tudo deu certo o ESP32 vai tentar conectar no WIFI e depois no broker mqtt configurado. Caso sucesso, imediatamente vai começar a emitir os dados dos sensores no monitor serial
 
 ---
 
