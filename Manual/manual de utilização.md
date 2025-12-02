@@ -106,12 +106,10 @@ O PlatformIO normalmente baixa as bibliotecas automaticamente ao abrir o projeto
 ### Passo 6: Compilar o Projeto
 
 1. Clique no ícone de **checkmark (✓)** na barra inferior do VS Code
-   <adicionar imagem>
 
 ### Passo 7: Upload para o ESP32
 
 1. Clique no ícone de **seta para direita (→)** na barra inferior do VS Code
-   <adicionar imagem>
 
 ### Passo 8: Monitor Serial (Opcional)
 
@@ -142,6 +140,7 @@ Para compilar o servidor, execute o script `build.sh` que utiliza CMake:
 ```
 
 Este script irá:
+
 - Limpar builds anteriores
 - Configurar o projeto com CMake
 - Compilar o servidor
@@ -157,6 +156,7 @@ Após a compilação, execute o servidor:
 ```
 
 O servidor irá:
+
 - Conectar ao broker MQTT configurado
 - Aguardar dados dos sensores do ESP32
 - Armazenar as leituras no banco de dados `garden.db`
