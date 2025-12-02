@@ -1,26 +1,27 @@
-## Gerenciamento de Projeto
+# Gerenciamento de Projeto
 
+## Metodologia
 
-# Metodologia
-
-Descreva aqui a metodologia de trabalho do grupo para atacar o problema. Definições sobre os ambiente de trabalho utilizados pela  equipe para desenvolver o projeto. Abrange a relação de ambientes utilizados, a estrutura para gestão do código fonte, além da definição do processo e ferramenta através dos quais a equipe se organiza (Gestão de Times).
+O projeto foi desenvolvido individualmente, utilizando uma abordagem iterativa onde cada componente do sistema foi desenvolvido e testado separadamente antes da integração final.
 
 ### Divisão de Papéis
 
-Apresente a divisão de papéis entre os membros do grupo.
+Por se tratar de um projeto individual, todas as funções foram desempenhadas por um único integrante:
 
-Exemplificação: A equipe utiliza metodologias ágeis, tendo escolhido o Scrum como base para definição do processo de desenvolvimento. A equipe está organizada da seguinte maneira:
-- Scrum Master: Aluno 1;
-- Equipe de Desenvolvimento: Aluno 1, Aluno 2, Aluno 3;
-
-
-### Processo
-
-Coloque  informações sobre detalhes da implementação do Scrum seguido pelo grupo. Cole aqui um print do quadro Kanban utilizado pelo grupo.
- 
+- **Scrum Master:** Fernando Vieira da Rocha Valentim
+- **Desenvolvedor:** Fernando Vieira da Rocha Valentim
+- **Tester:** Fernando Vieira da Rocha Valentim
 
 ### Ferramentas
 
 As ferramentas utilizadas no projeto foram:
 
-- Liste aqui as ferramentas utilizadas para desenvolvimento do projeto (como por exemplo: Arduino IDE, APP Inventor, trello e outros). Obs: não é para listar aqui os componentes utilizados.
+| Ferramenta | Finalidade |
+|------------|------------|
+| **Visual Studio Code** | Editor de código principal |
+| **PlatformIO** | Ambiente de desenvolvimento para ESP32 |
+| **CMake** | Build system para o servidor C++ |
+| **Git/GitHub** | Controle de versão e repositório |
+| **Wokwi Simulator** | Simulação do ESP32 e componentes |
+| **MQTT (Mosquitto)** | Broker para comunicação IoT |
+| **SQLite** | Banco de dados para armazenamento |
