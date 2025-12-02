@@ -1,5 +1,21 @@
 # Manual de Utilização
 
+![ESP32](https://img.shields.io/badge/ESP32-E7352C?style=for-the-badge&logo=espressif&logoColor=white)
+![PlatformIO](https://img.shields.io/badge/PlatformIO-F5822A?style=for-the-badge&logo=platformio&logoColor=white)
+![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
+![MQTT](https://img.shields.io/badge/MQTT-660066?style=for-the-badge&logo=mqtt&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+
+## Estrutura do Projeto
+
+```
+Codigo/
+├── iot/        → Código do ESP32 (PlatformIO)
+└── server/     → Servidor backend (DB, MQTT)
+```
+
+---
+
 ## Aviso Importante
 
 **Sistema Operacional:** Todo o desenvolvimento deste projeto foi realizado no **Linux**. Não testamos nem oferecemos suporte para o desenvolvimento em outros sistemas operacionais (Windows, macOS, etc.). Caso você utilize outro SO, poderá encontrar diferenças ou problemas não documentados na hora de buildar o projeto e fazer upload para o ESP32
@@ -110,6 +126,40 @@ Para visualizar as mensagens do ESP32:
 
 ## Configuração do Servidor
 
-_Seção a ser adicionada posteriormente._
+O servidor é uma aplicação em C++ que se conecta ao broker MQTT e recebe os dados enviados pelo ESP32. Ele armazena as leituras dos sensores (temperatura, umidade e luminosidade) em um banco de dados SQLite local.
+
+### Passo 1: Compilar o Servidor
+
+Para compilar o servidor, execute o script `build.sh` que utiliza CMake:
+
+1. Abra um terminal
+2. Navegue até a pasta `Codigo/` do projeto
+3. Execute o comando:
+
+```bash
+./build.sh
+```
+
+Este script irá:
+- Limpar builds anteriores
+- Configurar o projeto com CMake
+- Compilar o servidor
+
+O executável será gerado em `Codigo/server/build/`
+
+### Passo 2: Executar o Servidor
+
+Após a compilação, execute o servidor:
+
+```bash
+./server/build/iot_garden_server
+```
+
+O servidor irá:
+- Conectar ao broker MQTT configurado
+- Aguardar dados dos sensores do ESP32
+- Armazenar as leituras no banco de dados `garden.db`
+
+Para parar o servidor, pressione `Ctrl+C`.
 
 ---
