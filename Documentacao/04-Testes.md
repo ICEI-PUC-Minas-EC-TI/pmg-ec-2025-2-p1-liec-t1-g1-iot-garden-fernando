@@ -18,7 +18,9 @@ Os testes foram realizados de forma incremental, validando cada componente isola
 
 5. **Teste do Servidor** - Verificamos o recebimento dos dados via MQTT e armazenamento no SQLite
 
-6. **Integração Final** - Testamos o sistema completo com todos os componentes conectados
+6. **Simulador do ESP32** - Desenvolvemos um simulador (`simulator.cpp`) que publica dados fake via MQTT para testar o servidor e o banco de dados sem precisar do hardware real
+
+7. **Integração Final** - Testamos o sistema completo com todos os componentes conectados
 
 ## Desafios
 

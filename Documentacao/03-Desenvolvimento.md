@@ -15,6 +15,33 @@ Os materiais utilizados no projeto foram:
 
 # Desenvolvimento
 
+## Estrutura do Código
+
+```
+Codigo/
+├── iot/                        ← Código do ESP32 (PlatformIO)
+│   └── src/
+│       ├── main.cpp            ← Ponto de entrada, loop principal
+│       ├── config/
+│       │   └── pins.h          ← Definição dos pinos GPIO
+│       └── modules/
+│           ├── actuator/       ← Controle dos atuadores (fan, bomba, luz)
+│           ├── mqtt/           ← Conexão WiFi e comunicação MQTT
+│           ├── sensor_dht/     ← Leitura do sensor DHT11
+│           ├── sensor_light/   ← Leitura do photoresistor
+│           └── sensor_soil/    ← Leitura do sensor de umidade do solo
+│
+└── server/                     ← Servidor C++ (CMake)
+    ├── include/
+    │   ├── database.h          ← Header do banco de dados
+    │   └── mqtt_client.h       ← Header do cliente MQTT
+    └── src/
+        ├── main.cpp            ← Ponto de entrada do servidor
+        ├── database.cpp        ← Armazenamento no SQLite
+        ├── mqtt_client.cpp     ← Cliente MQTT para receber dados
+        └── simulator.cpp       ← Simulador do ESP32 para testes
+```
+
 O desenvolvimento do projeto foi realizado de forma incremental, testando cada componente isoladamente antes de integrar ao sistema final. Primeiro simulamos no Wokwi para entender o funcionamento dos sensores, depois testamos cada sensor isoladamente no hardware real, em seguida testamos o servidor MQTT, depois os atuadores substituídos por LEDs, e por fim integramos tudo.
 
 ## Desenvolvimento do Aplicativo
