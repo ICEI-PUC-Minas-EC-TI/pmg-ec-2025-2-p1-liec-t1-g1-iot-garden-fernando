@@ -14,28 +14,28 @@ Os materiais utilizados no projeto foram:
 
 # Desenvolvimento
 
-O desenvolvimento do projeto foi realizado de forma incremental, testando cada componente isoladamente antes de integrar ao sistema final.
+O desenvolvimento do projeto foi realizado de forma incremental, testando cada componente isoladamente antes de integrar ao sistema final. Primeiro simulamos no Wokwi para entender o funcionamento dos sensores, depois testamos cada sensor isoladamente no hardware real, em seguida testamos o servidor MQTT, depois os atuadores substituídos por LEDs, e por fim integramos tudo.
 
-## Etapa 1: Simulação no Wokwi
+## Desenvolvimento do Aplicativo
 
-Inicialmente, utilizamos o simulador Wokwi para entender o funcionamento dos sensores e do ESP32. Isso permitiu testar a lógica do código sem a necessidade do hardware físico, acelerando o aprendizado sobre cada componente.
+### Interface
 
-## Etapa 2: Testes Isolados dos Sensores
+Não foi desenvolvido aplicativo mobile para este projeto.
 
-Após a simulação, partimos para testes com o hardware real. Cada sensor foi testado individualmente em pequenos projetos separados:
+### Código
 
-- Teste do DHT11 (temperatura e umidade)
-- Teste do sensor de umidade do solo
-- Teste do photoresistor (luminosidade)
+Não foi desenvolvido aplicativo mobile para este projeto.
 
-## Etapa 3: Teste do Servidor MQTT
+## Desenvolvimento do Hardware
 
-Com os sensores funcionando, desenvolvemos e testamos o servidor C++ que recebe os dados via MQTT. Validamos a conexão com o broker e o armazenamento no banco SQLite.
+### Montagem
 
-## Etapa 4: Teste dos Atuadores com LEDs
+A montagem foi feita de forma gradual. Inicialmente, utilizamos o simulador Wokwi para entender o funcionamento dos sensores e do ESP32 sem necessidade do hardware físico. Depois, cada sensor foi montado e testado individualmente em pequenos projetos separados (DHT11, sensor de umidade do solo, photoresistor). Os atuadores foram primeiro substituídos por LEDs para testar a lógica de acionamento de forma segura. Só após validar cada componente isoladamente, realizamos a montagem final integrando todos os sensores e atuadores.
 
-Antes de conectar os atuadores reais (ventoinha, bomba, luz), substituímos cada um por LEDs para testar a lógica de acionamento de forma segura.
+### Desenvolvimento do Código
 
-## Etapa 5: Integração Final
+O código do ESP32 foi desenvolvido em C++ utilizando PlatformIO. O desenvolvimento seguiu a mesma abordagem incremental: primeiro código para cada sensor isolado, depois integração com MQTT, depois lógica de acionamento dos atuadores, e por fim integração de tudo no código principal.
 
-Por fim, integramos todos os componentes: sensores, atuadores reais, comunicação MQTT e servidor. Cada parte já havia sido validada isoladamente, facilitando a identificação de problemas na integração.
+## Comunicação entre App e Hardware
+
+A comunicação é feita via protocolo MQTT. O ESP32 publica os dados dos sensores em tópicos específicos (temperatura, umidade, luminosidade, umidade do solo). Um servidor em C++ se conecta ao broker MQTT, recebe esses dados e armazena em banco de dados SQLite. O servidor também pode enviar comandos para acionar os atuadores (ventoinha, bomba, luz) através de tópicos MQTT que o ESP32 escuta.
