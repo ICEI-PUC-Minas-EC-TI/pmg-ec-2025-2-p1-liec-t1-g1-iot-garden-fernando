@@ -1,0 +1,68 @@
+# ===================
+# IOT (ESP32/PlatformIO)
+# ===================
+iot/.pio
+iot/.vscode/.browse.c_cpp.db*
+iot/.vscode/c_cpp_properties.json
+iot/.vscode/launch.json
+iot/.vscode/ipch
+iot/platformio.ini
+
+# ===================
+# Server (C++)
+# ===================
+server/subscriber
+server/*.db
+server/build/
+
+# ===================
+# Frontend (React Native/Expo)
+# ===================
+# dependencies
+frontend/node_modules/
+
+# Expo
+frontend/.expo/
+frontend/dist/
+frontend/web-build/
+frontend/expo-env.d.ts
+
+# Native
+frontend/.kotlin/
+frontend/*.orig.*
+frontend/*.jks
+frontend/*.p8
+frontend/*.p12
+frontend/*.key
+frontend/*.mobileprovision
+
+# Metro
+frontend/.metro-health-check*
+
+# Generated native folders
+frontend/ios
+frontend/android
+
+# ===================
+# General
+# ===================
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# Editor
+.vscode/
+*.swp
+*.swo
+*~
