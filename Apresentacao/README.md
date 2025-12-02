@@ -1,4 +1,4 @@
-![453213413414134](https://github.com/user-attachments/assets/08107046-5bd2-4dce-b224-80ce350d6d64)# Apresentação da Solução
+# Apresentação da Solução
 
 
 https://github.com/user-attachments/assets/18b157da-92f1-4d0d-83af-d0b98ad7a418
