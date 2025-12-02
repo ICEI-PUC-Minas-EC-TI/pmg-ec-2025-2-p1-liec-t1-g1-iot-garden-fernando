@@ -20,11 +20,11 @@ O desenvolvimento do projeto foi realizado de forma incremental, testando cada c
 
 ### Interface
 
-Não foi desenvolvido aplicativo mobile para este projeto.
+Foi desenvolvido um aplicativo mobile utilizando o MIT App Inventor. O aplicativo se conecta ao broker MQTT para publicar comandos (acionar atuadores) e subscrever nos tópicos dos sensores para exibir os dados em tempo real.
 
 ### Código
 
-Não foi desenvolvido aplicativo mobile para este projeto.
+O App Inventor não utiliza código tradicional. A lógica é construída através de blocos visuais que são arrastados e conectados, similar a um quebra-cabeça. Isso facilita o desenvolvimento sem necessidade de conhecimento em programação.
 
 ## Desenvolvimento do Hardware
 
